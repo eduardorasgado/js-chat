@@ -23,6 +23,12 @@ export const register = async ({ email, password, username, avatar }) => {
 
     return user;
   } catch(error) {
-    return Promise.reject(error.message)
+    return Promise.reject(error.message);
   }
 }
+
+export const onAuthStateChanges = onAuth => {
+  firebase.auth().onAuthStateChanged(onAuth);
+}
+
+export const logout = () => firebase.auth().signOut();

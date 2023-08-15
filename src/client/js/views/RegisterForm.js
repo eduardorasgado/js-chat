@@ -8,7 +8,7 @@ function RegisterForm() {
   const dispatch = useDispatch();
 
   const onSubmit = (registerData) => {
-    dispatch(registerUser(registerData))
+    dispatch(registerUser(registerData));
   }
 
   return (
