@@ -1,17 +1,24 @@
 import * as api from '../api/auth';
 
-export const registerUser = formData => dispatch =>
-  api
-    .register(formData)
-    .then(_ => dispatch({type: 'AUTH_REGISTER_SUCCESS'}));
+export const registerUser = formData => dispatch => {
+  dispatch({type: 'AUTH_REGISTER_SUCCESS'});
 
-export const loginUser = authData => dispatch =>
-  api
-    .login(authData)
-    .then(user => dispatch({
-      type: 'AUTH_LOGIN_SUCCESS',
-      user
-    }));
+  return api
+          .register(formData)
+          .then(_ => dispatch({type: 'AUTH_REGISTER_SUCCESS'}));
+}
+  
+
+export const loginUser = authData => dispatch => {
+  dispatch({type: 'AUTH_LOGIN_SUCCESS'});
+
+  return api
+          .login(authData)
+          .then(user => dispatch({
+            type: 'AUTH_LOGIN_SUCCESS',
+            user
+          }));
+}
 
 export const logout = () => dispatch =>
   api

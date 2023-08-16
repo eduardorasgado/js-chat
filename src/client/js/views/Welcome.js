@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';;
 import { Redirect } from 'react-router-dom'
 import LoginForm from '../components/LoginForm';
 import RegisterForm from './RegisterForm';
+import LoadingView from '../components/shared/LoadingView';
 
 function Welcome() {
   const [isLoginView, setIsLogin] = useState(true);
@@ -13,7 +14,7 @@ function Welcome() {
   console.log({user, isChecking})
 
   if(isChecking) {
-    return <h1>Checking for active accounts...</h1>
+    return <LoadingView message={'loading...'}/>
   }
 
   if(user) {
