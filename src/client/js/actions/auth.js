@@ -1,7 +1,7 @@
 import * as api from '../api/auth';
 
 export const registerUser = formData => dispatch => {
-  dispatch({type: 'AUTH_REGISTER_SUCCESS'});
+  dispatch({type: 'AUTH_REGISTER_INIT'});
 
   return api
           .register(formData)
@@ -10,7 +10,7 @@ export const registerUser = formData => dispatch => {
   
 
 export const loginUser = authData => dispatch => {
-  dispatch({type: 'AUTH_LOGIN_SUCCESS'});
+  dispatch({type: 'AUTH_LOGIN_INIT'});
 
   return api
           .login(authData)
