@@ -1,12 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../actions/auth';
 
 function RegisterForm() {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-
+  const registerError = useSelector(({auth}) => auth.register.error);
+  
   const onSubmit = (registerData) => {
     dispatch(registerUser(registerData));
   }
@@ -55,7 +56,7 @@ function RegisterForm() {
             className="form-control"
             id="password" />
         </div>
-        {false && <div className="alert alert-danger small">Some Error</div>}
+        {registerError && <div className="alert alert-danger small">{registerError}</div>}
         <button type="submit" className="btn btn-outline-primary">Register</button>
       </div>
     </form>

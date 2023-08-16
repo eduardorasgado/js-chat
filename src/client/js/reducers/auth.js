@@ -1,4 +1,13 @@
 import { combineReducers } from "redux"
+import { createErrorReducer } from "./shared";
+
+function createLoginReducer() {
+  return combineReducers({ error: createErrorReducer('AUTH_LOGIN') });
+}
+
+function createRegisterReducer() {
+  return combineReducers({ error: createErrorReducer('AUTH_REGISTER') });
+}
 
 function createAuthReducer() {
   const user =  (state = null, action) => {
@@ -8,11 +17,9 @@ function createAuthReducer() {
         return null;
 
       case 'AUTH_ON_SUCCESS':
-        console.log('[user reducer]auth on success');
         return action.user;
 
       default:
-        console.log('[user reducer] default');
         return state;
     }
   }
@@ -20,30 +27,27 @@ function createAuthReducer() {
   const isChecking = (state = false, action) => {
     switch(action.type) {
       case 'AUTH_ON_INIT':
-        console.log('[reducer] on init');
       case 'AUTH_REGISTER_INIT':
-        console.log('[reducer] auth register init');
       case 'AUTH_LOGIN_INIT':
-        console.log('[reducer] auth login init');
         return true;
   
       case 'AUTH_ON_SUCCESS':
-        console.log('[isChecking reducer] auth on success');
       case 'AUTH_ON_ERROR':
-        console.log('[isChecking reducer] auth on error');
       case 'AUTH_LOGOUT_SUCCESS':
-        console.log('[isChecking reducer] auth logout success');
+      case 'AUTH_LOGIN_ERROR':
+      case 'AUTH_REGISTER_ERROR':
         return false;
 
       default:
-        console.log('[isChecking reducer] default')
         return state;
     }
   }
 
   return combineReducers({
     user, 
-    isChecking
+    isChecking,
+    login: createLoginReducer(),
+    register: createRegisterReducer()
   });
 }
 

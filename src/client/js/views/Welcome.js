@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';;
 import { Redirect } from 'react-router-dom'
 import LoginForm from '../components/LoginForm';
-import RegisterForm from './RegisterForm';
+import RegisterForm from '../components/RegisterForm';
 import LoadingView from '../components/shared/LoadingView';
 
 function Welcome() {
