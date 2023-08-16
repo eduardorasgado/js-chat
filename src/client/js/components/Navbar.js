@@ -7,13 +7,13 @@ function Navbar() {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(({auth}) => auth.user);
+  const user = useSelector(({ auth }) => auth.user);
 
   return (
     <div className="chat-navbar">
       <nav className="chat-navbar-inner">
         <div className="chat-navbar-inner-left">
-          <button 
+          <button
             onClick={() => {
               history.goBack()
             }}
@@ -23,20 +23,26 @@ function Navbar() {
             className="btn btn-outline-success ml-2">Settings</Link>
         </div>
         <div className="chat-navbar-inner-right">
-          <span className="logged-in-user">Hi User</span>
           <Link
             to="/"
             className="btn btn-sm btn-outline-success ml-2">
-              Login
+            Login
           </Link>
-         { user &&
-           <button
-            to="/"
-            onClick={() => dispatch(logout())}
-            className="btn btn-sm btn-outline-danger ml-2">
-              Logout
-          </button>
-         }
+          {user &&
+            <>
+              <img
+                  src={user.avatar}
+                  className='avatar mr-2'
+                  alt="Retail Admin" />
+              <span className="logged-in-user">Hi {user.username}</span>
+              <button
+                to="/"
+                onClick={() => dispatch(logout())}
+                className="btn btn-sm btn-outline-danger ml-4">
+                Logout
+              </button>
+            </>
+          }
         </div>
       </nav>
     </div>

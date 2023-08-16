@@ -1,55 +1,50 @@
-const DEFAULT_STATE = {
-  user: null,
-  isChecking: false
-}
+import { combineReducers } from "redux"
 
-function authReducer(state = DEFAULT_STATE, action) {
-  switch(action.type) {
-    case 'AUTH_ON_INIT':
-      console.log('[reducer] on init')
-      return {
-        user: null,
-        isChecking: true
-      };
+function createAuthReducer() {
+  const user =  (state = null, action) => {
+    switch(action.type) {
+      case 'AUTH_ON_INIT':
+      case 'AUTH_ON_ERROR':
+        return null;
 
-    case 'AUTH_ON_SUCCESS':
-      console.log('[reducer] on success')
-      return {
-        user: action.user, 
-        isChecking: false
-      }
+      case 'AUTH_ON_SUCCESS':
+        console.log('[user reducer]auth on success');
+        return action.user;
 
-    case 'AUTH_ON_ERROR':
-      console.log('[reducer] on error')
-      return DEFAULT_STATE;
-
-    case 'AUTH_REGISTER_INIT':
-      console.log('[reducer] auth register init')
-    case 'AUTH_LOGIN_INIT':
-      console.log('[reducer] auth login init')
-      return {
-        ...state,
-        isChecking: true
-      };
-
-    case 'AUTH_REGISTER_SUCCESS':
-      console.log('[reducer] auth register success')
-    case 'AUTH_LOGIN_SUCCESS':
-      console.log('[reducer] auth login success')
-      return {
-        ...state,
-        isChecking: false
-      }
-
-    case 'AUTH_LOGOUT_SUCCESS':
-      console.log('[reducer] auth logout success')
-      return DEFAULT_STATE;
-
-    default:
-      console.log('[reducer] default')
-      return state;
-
+      default:
+        console.log('[user reducer] default');
+        return state;
+    }
   }
+
+  const isChecking = (state = false, action) => {
+    switch(action.type) {
+      case 'AUTH_ON_INIT':
+        console.log('[reducer] on init');
+      case 'AUTH_REGISTER_INIT':
+        console.log('[reducer] auth register init');
+      case 'AUTH_LOGIN_INIT':
+        console.log('[reducer] auth login init');
+        return true;
+  
+      case 'AUTH_ON_SUCCESS':
+        console.log('[isChecking reducer] auth on success');
+      case 'AUTH_ON_ERROR':
+        console.log('[isChecking reducer] auth on error');
+      case 'AUTH_LOGOUT_SUCCESS':
+        console.log('[isChecking reducer] auth logout success');
+        return false;
+
+      default:
+        console.log('[isChecking reducer] default')
+        return state;
+    }
+  }
+
+  return combineReducers({
+    user, 
+    isChecking
+  });
 }
 
-export default authReducer;
+export default createAuthReducer();
