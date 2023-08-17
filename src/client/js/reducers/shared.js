@@ -9,3 +9,16 @@ export const createErrorReducer = actionType =>
         return state;
     }
   }
+
+  export const createIsFetchingReducer = actionType => 
+  (state = false, action) => {
+    switch(action.type) {
+      case `${actionType}_INIT`:
+      return true;
+      case `${actionType}_ERROR`:
+      case `${actionType}_SUCCESS`:
+        return false;
+      default:
+        return state;
+    }
+  }

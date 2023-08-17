@@ -3,20 +3,12 @@ import { useSelector } from 'react-redux';;
 import { Redirect } from 'react-router-dom'
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import LoadingView from '../components/shared/LoadingView';
 
 function Welcome() {
   const [isLoginView, setIsLogin] = useState(true);
 
   const user = useSelector(({auth}) => auth.user);
-  const isChecking = useSelector(({auth}) => auth.isChecking);
-
-  console.log({user, isChecking})
-
-  if(isChecking) {
-    return <LoadingView message={'loading...'}/>
-  }
-
+  
   if(user) {
     return <Redirect to="/home"/>
   }

@@ -1,12 +1,24 @@
 import { combineReducers } from "redux"
-import { createErrorReducer } from "./shared";
+import { createErrorReducer, createIsFetchingReducer } from "./shared";
 
 function createLoginReducer() {
-  return combineReducers({ error: createErrorReducer('AUTH_LOGIN') });
+  return combineReducers({ 
+    isChecking: createIsFetchingReducer('AUTH_LOGIN'),
+    error: createErrorReducer('AUTH_LOGIN') 
+  });
 }
 
 function createRegisterReducer() {
-  return combineReducers({ error: createErrorReducer('AUTH_REGISTER') });
+  return combineReducers({
+    isChecking: createIsFetchingReducer('AUTH_REGISTER'),
+    error: createErrorReducer('AUTH_REGISTER') 
+  });
+}
+
+function createLogoutReducer() {
+  return combineReducers({
+    isChecking: createIsFetchingReducer('AUTH_LOGOUT')
+  });
 }
 
 function createAuthReducer() {
@@ -17,35 +29,19 @@ function createAuthReducer() {
         return null;
 
       case 'AUTH_ON_SUCCESS':
+      case 'AUTH_LOGIN_SUCCESS':
+      case 'AUTH_REGISTER_SUCCESS':
         return action.user;
 
       default:
         return state;
     }
-  }
-
-  const isChecking = (state = false, action) => {
-    switch(action.type) {
-      case 'AUTH_ON_INIT':
-      case 'AUTH_REGISTER_INIT':
-      case 'AUTH_LOGIN_INIT':
-        return true;
-  
-      case 'AUTH_ON_SUCCESS':
-      case 'AUTH_ON_ERROR':
-      case 'AUTH_LOGOUT_SUCCESS':
-      case 'AUTH_LOGIN_ERROR':
-      case 'AUTH_REGISTER_ERROR':
-        return false;
-
-      default:
-        return state;
-    }
-  }
+  }  
 
   return combineReducers({
     user, 
-    isChecking,
+    isChecking: createIsFetchingReducer('AUTH_ON'),
+    logout: createLogoutReducer(),
     login: createLoginReducer(),
     register: createRegisterReducer()
   });

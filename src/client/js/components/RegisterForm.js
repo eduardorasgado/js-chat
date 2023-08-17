@@ -2,12 +2,18 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../actions/auth';
+import LoadingView from './shared/LoadingView';
 
 function RegisterForm() {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const registerError = useSelector(({auth}) => auth.register.error);
-  
+  const isChecking = useSelector(({auth}) => auth.register.isChecking);
+
+  if(isChecking) {
+    return <LoadingView message={'Registering...'}/>
+  }
+
   const onSubmit = (registerData) => {
     dispatch(registerUser(registerData));
   }
