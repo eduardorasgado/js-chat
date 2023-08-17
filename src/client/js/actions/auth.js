@@ -11,7 +11,7 @@ export const registerUser = formData => dispatch => {
   
 
 export const loginUser = authData => dispatch => {
-  dispatch({type: 'AUTH_LOGIN_INIT'});
+  dispatch({type: 'AUTH_LOGOUT_INIT'});
 
   return api
           .login(authData)
@@ -19,10 +19,14 @@ export const loginUser = authData => dispatch => {
           .catch(error => dispatch({ type: 'AUTH_LOGIN_ERROR', error }));
 }
 
-export const logout = () => dispatch =>
-  api
-    .logout()
-    .then(_ => dispatch({type: 'AUTH_LOGOUT_SUCCESS'}));
+export const logout = () => dispatch => {
+  // remove if there is no middleware implemented for logout
+  dispatch({type: 'AUTH_LOGIN_INIT'});
+
+  return api
+          .logout()
+          .then(_ => dispatch({type: 'AUTH_LOGOUT_SUCCESS'}));
+}
 
 export const listenToAuthChanges = () => dispatch => {
   dispatch({type: 'AUTH_ON_INIT'});

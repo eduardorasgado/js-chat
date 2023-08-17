@@ -10,22 +10,26 @@ import HomeView from './views/Home'
 import WelcomeView from './views/Welcome';
 import SettingsView from './views/Settings';
 import ChatView from './views/Chat';
-import Navbar from "./components/Navbar";
 import { listenToAuthChanges } from './actions/auth';
 import StoreProvider from './store/StoreProvider';
 import LoadingView from './components/shared/LoadingView';
 
-function AuthRoute({children, ...rest}) {
-  const user = useSelector(({auth}) => auth.user);
+function AuthRoute({ children, ...rest }) {
+  const user = useSelector(({ auth }) => auth.user);
+  const onlyChild = React.Children.only(children);
 
   return (
-    <Route render={() => {
-      user ? children : <Redirect to='/'/>;
-    }} />
+    <Route
+      {...rest}
+      render={props => 
+        user 
+          ? React.cloneElement(onlyChild, { ...rest, ...props }) 
+          : <Redirect to='/' />
+      } />
   );
 }
 
-const ContentWrapper = ({children}) => {
+const ContentWrapper = ({ children }) => {
   return (
     <div className='content-wrapper'>
       {children}
@@ -36,33 +40,32 @@ const ContentWrapper = ({children}) => {
 function ChatApp() {
   const dispatch = useDispatch();
 
-  const isChecking = useSelector(({auth}) => auth.isChecking);
+  const isChecking = useSelector(({ auth }) => auth.isChecking);
 
   useEffect(() => {
     dispatch(listenToAuthChanges());
   }, [dispatch]);
 
-  if(isChecking) {
-    return <LoadingView message={'Loading...'}/>
+  if (isChecking) {
+    return <LoadingView message={'Loading...'} />
   }
 
-  return (    
+  return (
     <Router>
-      <Navbar />
       <ContentWrapper>
         <Switch>
           <Route path="/" exact>
             <WelcomeView />
           </Route>
-          <Route path="/home">
+          <AuthRoute path="/home">
             <HomeView />
-          </Route>
-          <Route path="/chat/:id">
+          </AuthRoute>
+          <AuthRoute path="/chat/:id">
             <ChatView />
-          </Route>
-          <Route path="/settings">
+          </AuthRoute>
+          <AuthRoute path="/settings">
             <SettingsView />
-          </Route>
+          </AuthRoute>
         </Switch>
       </ContentWrapper>
     </Router>

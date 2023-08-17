@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import JoinedChatList from "../components/JoinedChatList";
 import AvailableChatList from "../components/AvailableChatList";
 import ViewTitle from "../components/shared/ViewTitle";
-
-import { useDispatch, useSelector } from 'react-redux'
+import BaseLayout from '../layouts/Base';
 import { fetchChats } from "../actions/chats";
 
-function Home() {
+function HomeView() {
   const chatList = useSelector((state) => state.chat.items)
   const dispatch = useDispatch();
 
@@ -27,6 +27,14 @@ function Home() {
       </div>
     </div>
   );
+}
+
+function Home() {
+  return ( 
+    <BaseLayout canGoBack={false}>
+      <HomeView />
+    </BaseLayout>
+   );
 }
 
 export default Home;
