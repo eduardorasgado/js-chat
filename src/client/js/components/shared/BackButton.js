@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom'
 function BackButton() {
   const history = useHistory()
 
-  return ( 
+  return (
     <button
-      onClick={() => history.goBack() }
+      onClick={() => history.goBack()}
       className="btn btn-outline-primary">Back</button>
-   );
+  );
 }
 
 export default BackButton;
