@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import JoinedChatList from "../components/JoinedChatList";
 import AvailableChatList from "../components/AvailableChatList";
 import ViewTitle from "../components/shared/ViewTitle";
-import BaseLayout from '../layouts/Base';
+import { withBaseLayout } from '../layouts/Base';
 import { fetchChats } from "../actions/chats";
 
-function HomeView() {
+function Home() {
   const chatList = useSelector((state) => state.chat.items)
   const dispatch = useDispatch();
 
@@ -29,12 +29,4 @@ function HomeView() {
   );
 }
 
-function Home() {
-  return ( 
-    <BaseLayout canGoBack={false}>
-      <HomeView />
-    </BaseLayout>
-   );
-}
-
-export default Home;
+export default withBaseLayout(Home, {canGoBack: false});

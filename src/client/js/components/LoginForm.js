@@ -9,7 +9,6 @@ function LoginForm() {
   const dispatch = useDispatch();
   const loginError = useSelector(({auth}) => auth.login.error);
   const isChecking = useSelector(({auth}) => auth.login.isChecking);
-  const user = useSelector(({auth}) => auth.user);
 
   if(isChecking) {
     return <LoadingView message={'Login...'}/>
@@ -44,7 +43,7 @@ function LoginForm() {
             className="form-control"
             id="password" />
         </div>
-        {loginError && <div className="alert alert-danger small">{loginError.message}</div>}
+        {loginError && <div className="alert alert-danger small">{loginError}</div>}
         <button 
           type="submit" className="btn btn-outline-primary">Login</button>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import BaseLayout from '../layouts/Base';
+import BaseLayout, { withBaseLayout } from '../layouts/Base';
 
-function SettingsView() {
+function Settings() {
 
   return (
     <div className="centered-view">
@@ -45,12 +45,4 @@ function SettingsView() {
   )
 }
 
-function Settings() {
-  return ( 
-    <BaseLayout>
-      <SettingsView />
-    </BaseLayout>
-   );
-}
-
-export default Settings;
+export default withBaseLayout(Settings);

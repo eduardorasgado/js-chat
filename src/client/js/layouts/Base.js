@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 
-function BaseLayout({ children, ...props }) {
+export default function BaseLayout({ children, ...props }) {
 
   return (
     <>
@@ -11,4 +11,14 @@ function BaseLayout({ children, ...props }) {
   );
 }
 
-export default BaseLayout;
+const _getDisplayName = (Component) => 
+  Component.displayName || Component.name || 'Component';
+
+export const withBaseLayout = (Component, navbarProps) => props => {
+  return (
+    <>
+      <Navbar {...navbarProps} view={_getDisplayName(Component)} />
+      <Component {...props} />
+    </>
+  )
+}
