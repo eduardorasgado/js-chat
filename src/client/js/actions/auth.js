@@ -12,7 +12,6 @@ export const registerUser = formData => dispatch => {
 
 export const loginUser = authData => dispatch => {
   dispatch({ type: 'AUTH_LOGIN_INIT' });
-
   return api
     .login(authData)
     .then(user => {
@@ -35,7 +34,7 @@ export const logout = () => dispatch => {
 export const listenToAuthChanges = () => dispatch => {
   dispatch({ type: 'AUTH_ON_INIT' });
 
-  api.onAuthStateChanges(async authUser => {
+  return api.onAuthStateChanges(async authUser => {
     if (authUser) {
       const userProfile = await api.getUserProfile(authUser.uid)
 

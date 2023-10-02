@@ -5,12 +5,15 @@ import AvailableChatList from "../components/AvailableChatList";
 import ViewTitle from "../components/shared/ViewTitle";
 import { withBaseLayout } from '../layouts/Base';
 import { fetchChats } from "../actions/chats";
+import Notification from '../utils/notifications'
 
 function Home() {
   const chatList = useSelector((state) => state.chat.items)
   const dispatch = useDispatch();
 
-  useEffect(() => {    
+  useEffect(() => {
+    Notification.setup();
+    
     dispatch(fetchChats());
   }, [dispatch]);
   

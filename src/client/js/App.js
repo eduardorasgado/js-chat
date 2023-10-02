@@ -13,6 +13,7 @@ import ChatView from './views/Chat';
 import { listenToAuthChanges } from './actions/auth';
 import StoreProvider from './store/StoreProvider';
 import LoadingView from './components/shared/LoadingView';
+import { listenToConnectionChanges } from './actions/app';
 
 function AuthRoute({ children, ...rest }) {
   const user = useSelector(({ auth }) => auth.user);
@@ -21,9 +22,9 @@ function AuthRoute({ children, ...rest }) {
   return (
     <Route
       {...rest}
-      render={props => 
-        user 
-          ? React.cloneElement(onlyChild, { ...rest, ...props }) 
+      render={props =>
+        user
+          ? React.cloneElement(onlyChild, { ...rest, ...props })
           : <Redirect to='/' />
       } />
   );
@@ -41,10 +42,21 @@ function ChatApp() {
   const dispatch = useDispatch();
 
   const isChecking = useSelector(({ auth }) => auth.isChecking);
+  const isOnline = useSelector(({ app }) => app.isOnline);
 
   useEffect(() => {
-    dispatch(listenToAuthChanges());
+    const unsubFromAuth = dispatch(listenToAuthChanges());
+    const unsubFromConnChanges = dispatch(listenToConnectionChanges());
+
+    return () => {
+      unsubFromAuth(); 
+      unsubFromConnChanges();
+    }
   }, [dispatch]);
+
+  if(!isOnline) {
+    return <LoadingView message={'Application has been disconected. Please reconnect...'} />
+  }
 
   if (isChecking) {
     return <LoadingView message={'Loading...'} />

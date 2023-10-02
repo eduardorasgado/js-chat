@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseLayout, { withBaseLayout } from '../layouts/Base';
+import { withBaseLayout } from '../layouts/Base';
 
 function Settings() {
 

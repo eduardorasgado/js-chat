@@ -47,5 +47,5 @@ export const login = async ({ email, password }) => {
 export const logout = () => firebase.auth().signOut();
 
 export const onAuthStateChanges = onAuth => {
-  firebase.auth().onAuthStateChanged(onAuth);
+  return firebase.auth().onAuthStateChanged(onAuth);
 }
