@@ -21,7 +21,7 @@ function Home() {
   return (
     <div className="row no-gutters fh">
       <div className="col-3 fh">
-        <JoinedChatList chatList={chatList}/>
+        <JoinedChatList chatList={[]}/>
       </div>
       <div className="col-9 fh">
         <ViewTitle title={'Choose your channel'}>
@@ -30,7 +30,7 @@ function Home() {
           </Link>
         </ViewTitle>
         <div className="container-fluid">
-          <AvailableChatList chatList={chatList}/>
+          <AvailableChatList chatList={[]}/>
         </div>
       </div>
     </div>
