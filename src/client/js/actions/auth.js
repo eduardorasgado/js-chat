@@ -15,10 +15,10 @@ export const loginUser = authData => dispatch => {
   return api
     .login(authData)
     .then(user => {
-      dispatch({ type: 'AUTH_LOGIN_SUCCESS', user })
+      dispatch({ type: 'AUTH_LOGIN_SUCCESS', user });
     })
     .catch(error => {
-      dispatch({ type: 'AUTH_LOGIN_ERROR', error })
+      dispatch({ type: 'AUTH_LOGIN_ERROR', error });
     });
 }
 
@@ -28,7 +28,10 @@ export const logout = () => dispatch => {
 
   return api
     .logout()
-    .then(_ => dispatch({ type: 'AUTH_LOGOUT_SUCCESS' }));
+    .then(_ => {
+      dispatch({ type: 'AUTH_LOGOUT_SUCCESS' });
+      dispatch({ type: 'CHATS_FETCH_RESTART' });
+    });
 }
 
 export const listenToAuthChanges = () => dispatch => {
@@ -36,11 +39,10 @@ export const listenToAuthChanges = () => dispatch => {
 
   return api.onAuthStateChanges(async authUser => {
     if (authUser) {
-      const userProfile = await api.getUserProfile(authUser.uid)
+      const userProfile = await api.getUserProfile(authUser.uid);
 
       dispatch({
         type: 'AUTH_ON_SUCCESS',
-        //user: { ...authUser, ...userProfile }
         user: userProfile
       });
     } else {

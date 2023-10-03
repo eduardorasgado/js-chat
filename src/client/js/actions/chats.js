@@ -32,7 +32,6 @@ export const fetchChats = () => async (dispatch, getState) => {
   }, { joined: [], available: [] });
 
   dispatch({ type: 'CHATS_FETCH_SUCCESS', ...sortedChatList })
-  
   return sortedChatList;
 }
 

@@ -9,9 +9,11 @@ import Notification from '../utils/notifications'
 import { Link } from "react-router-dom";
 
 function Home() {
-  const chatList = useSelector((state) => state.chat.items)
   const dispatch = useDispatch();
 
+  const joinedChatList = useSelector((state) => state.chat.joined);
+  const availableChatList = useSelector((state) => state.chat.available);
+  
   useEffect(() => {
     Notification.setup();
     
@@ -21,7 +23,7 @@ function Home() {
   return (
     <div className="row no-gutters fh">
       <div className="col-3 fh">
-        <JoinedChatList chatList={[]}/>
+        <JoinedChatList chatList={joinedChatList}/>
       </div>
       <div className="col-9 fh">
         <ViewTitle title={'Choose your channel'}>
@@ -30,7 +32,7 @@ function Home() {
           </Link>
         </ViewTitle>
         <div className="container-fluid">
-          <AvailableChatList chatList={[]}/>
+          <AvailableChatList chatList={availableChatList}/>
         </div>
       </div>
     </div>
