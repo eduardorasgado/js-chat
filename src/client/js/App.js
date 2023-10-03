@@ -14,6 +14,7 @@ import { listenToAuthChanges } from './actions/auth';
 import StoreProvider from './store/StoreProvider';
 import LoadingView from './components/shared/LoadingView';
 import { listenToConnectionChanges } from './actions/app';
+import ChatCreate from './views/ChatCreate';
 
 function AuthRoute({ children, ...rest }) {
   const user = useSelector(({ auth }) => auth.user);
@@ -66,17 +67,20 @@ function ChatApp() {
     <Router>
       <ContentWrapper>
         <Switch>
-          <Route path="/" exact>
+          <Route path='/' exact>
             <WelcomeView />
           </Route>
-          <AuthRoute path="/home">
+          <AuthRoute path='/home'>
             <HomeView />
           </AuthRoute>
-          <AuthRoute path="/chat/:id">
+          <AuthRoute path='/chat/:id'>
             <ChatView />
           </AuthRoute>
-          <AuthRoute path="/settings">
+          <AuthRoute path='/settings'>
             <SettingsView />
+          </AuthRoute>
+          <AuthRoute path='/chatCreate'>
+            <ChatCreate />
           </AuthRoute>
         </Switch>
       </ContentWrapper>

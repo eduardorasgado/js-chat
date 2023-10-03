@@ -1,10 +1,11 @@
 import React from 'react';
 
-function ViewTitle(props) {
+function ViewTitle({title, children}) {
   
   return (
     <div className="chat-name-container">
-      <span className="name">{props.title}</span>
+      <span className="name">{title}</span>
+      <div>{children}</div>
     </div>
   );
 }

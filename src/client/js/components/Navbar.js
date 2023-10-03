@@ -27,7 +27,7 @@ function Navbar({ canGoBack = true, view }) {
                 src={user.avatar}
                 className='avatar mr-2'
                 alt="Retail Admin" />
-              <span className="logged-in-user">Hi {user.username}</span>
+              <span className="logged-in-user">Hi, {user.username}</span>
               <button
                 to="/"
                 onClick={() => dispatch(logout())}

@@ -6,6 +6,7 @@ import ViewTitle from "../components/shared/ViewTitle";
 import { withBaseLayout } from '../layouts/Base';
 import { fetchChats } from "../actions/chats";
 import Notification from '../utils/notifications'
+import { Link } from "react-router-dom";
 
 function Home() {
   const chatList = useSelector((state) => state.chat.items)
@@ -23,7 +24,11 @@ function Home() {
         <JoinedChatList chatList={chatList}/>
       </div>
       <div className="col-9 fh">
-        <ViewTitle title={'Choose your channel'}/>
+        <ViewTitle title={'Choose your channel'}>
+          <Link className='btn btn-outline-primary btn-sm' to='/chatCreate'>
+            New
+          </Link>
+        </ViewTitle>
         <div className="container-fluid">
           <AvailableChatList chatList={chatList}/>
         </div>

@@ -1,10 +1,14 @@
 import React from 'react';
 
 function AvailableChatList({ chatList }) {
+  
+  const isChatListEmpty = (chatList) => {
+    return chatList == null || chatList == undefined || chatList.length == 0
+  }
 
   return (
     <div className="row mt-3">
-      {false &&
+      {isChatListEmpty(chatList) &&
         <div className="container-fluid">
           <div className="alert alert-warning">No chats to join :(</div>
         </div>}
