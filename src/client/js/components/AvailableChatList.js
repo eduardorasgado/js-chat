@@ -1,6 +1,18 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { joinChat } from '../actions/chats';
 
 function AvailableChatList({ chatList }) {
+  const dispatch = useDispatch();
+
+  const user = useSelector(({auth}) => auth.user);
+  
+  const askForConfirmation = chat => {
+    const isConfirming = window.confirm(`Do you want to join the chat: ${chat.name}?`)
+    if(isConfirming) {
+      dispatch(joinChat(chat, user.uid));
+    }
+  }
   
   const isChatListEmpty = (chatList) => {
     return chatList == null || chatList == undefined || chatList.length == 0
@@ -22,7 +34,7 @@ function AvailableChatList({ chatList }) {
                 <h5 className="card-title">{chat.name}</h5>
                 <p className="card-text">{chat.description}</p>
                 <button
-                  onClick={() => { }}
+                  onClick={() => { askForConfirmation(chat) }}
                   className="btn btn-outline-primary">Join Chat</button>
               </div>
             </div>

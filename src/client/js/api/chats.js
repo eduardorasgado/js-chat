@@ -20,12 +20,22 @@ export const createChat = chat => {
     .then(docRef => docRef.id);
 }
 
-export const joinChat = (userId, chatId) => {
+export const joinChat = async (userId, chatId) => {
   const userRef = db.doc(`profiles/${userId}`);
   const chatRef = db.doc(`chats/${chatId}`);
 
   const fsFieldValue = firebase.firestore.FieldValue;
 
-  userRef.update({joinedChats: fsFieldValue.arrayUnion(chatRef)})
-  chatRef.update({joinedUsers: fsFieldValue.arrayUnion(userRef)});
+  await userRef.update({joinedChats: fsFieldValue.arrayUnion(chatRef)})
+  await chatRef.update({joinedUsers: fsFieldValue.arrayUnion(userRef)});
+}
+
+export const subscribeToChat = (chatId, onSubscribe) => {
+  return db
+    .collection('chats')
+    .doc(chatId)
+    .onSnapshot(snapshot => {
+      const chat = {id: snapshot.id, ...snapshot.data()}
+      onSubscribe(chat);
+    });
 }
